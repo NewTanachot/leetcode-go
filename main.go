@@ -5,7 +5,7 @@ import (
 )
 
 func main() {
-	romanToInt("MCMXCIV")
+	longestCommonPrefix([]string{"flower", "flow", "flight"})
 }
 
 func twoSum(nums []int, target int) []int {
@@ -58,4 +58,76 @@ func romanToInt(s string) int {
 	}
 
 	return sum
+}
+
+// wrong it not prefix it check all sub string TT
+func longestCommonPrefix(strs []string) string {
+
+	i := 0
+	s := strs[i]
+	for in, v := range strs {
+		if len(s) > len(v) {
+			s = v
+			i = in
+		}
+	}
+
+	ns := append(strs[:i], strs[i+1:]...)
+	var r string
+	found := false
+
+	for i := 0; i < len(s); i++ {
+		t := s[:i+1]
+		for _, v := range ns {
+			if !strings.Contains(v, t) {
+				found = true
+				break
+			}
+		}
+		if found {
+			break
+		}
+		r = t
+	}
+
+	// OUT break [to] keyword
+
+	// out:
+	// 	for i := 0; i < len(s); i++ {
+	// 		t := s[:i+1]
+	// 		for _, v := range ns {
+	// 			if !strings.Contains(v, t) {
+	// 				break out
+	// 			}
+	// 		}
+	// 		r = t
+	// 	}
+
+	return r
+}
+
+func longestCommonPrefixChatGPT(strs []string) string {
+	if len(strs) == 0 {
+		return ""
+	}
+
+	// Find the shortest string in the slice
+	shortest := strs[0]
+	for _, str := range strs {
+		if len(str) < len(shortest) {
+			shortest = str
+		}
+	}
+
+	// Iterate over characters of the shortest string
+	for i := range shortest {
+		// Check if the character at index i is common in all strings
+		for _, str := range strs {
+			if str[i] != shortest[i] {
+				return shortest[:i] // Return the prefix found so far
+			}
+		}
+	}
+
+	return shortest // All strings are identical up to the length of the shortest one
 }
