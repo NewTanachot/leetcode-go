@@ -1,11 +1,68 @@
 package main
 
 import (
+	// "encoding/json"
+
+	"fmt"
 	"strings"
+	"sync"
 )
 
 func main() {
-	longestCommonPrefix([]string{"flower", "flow", "flight"})
+
+	var waitGroup sync.WaitGroup
+	var mutex sync.Mutex
+	var str []string
+
+	for i := 0; i < 5; i++ {
+		waitGroup.Add(1)
+		go func() {
+			defer waitGroup.Done()
+			mutex.Lock()
+			str = append(str, "*")
+			mutex.Unlock()
+		}()
+	}
+
+	waitGroup.Wait()
+	fmt.Println(str)
+
+	// fmt.Println(time.Now().Unix())
+
+	// ages := map[string]int{
+	// 	"john": 18,
+	// }
+
+	// if _, hasValue := ages["john"]; hasValue {
+	// 	fmt.Println("john found")
+	// } else {
+	// 	fmt.Println("john not found")
+	// }
+
+	// item := "Chocolate"
+	// price := 15.33333
+
+	// line := fmt.Sprintf("%s (%.2f)", item, price)
+
+	// fmt.Println(line)
+
+	// type SimpleStruct struct {
+	// 	GreetingMessage string `json:"greeting_message"`
+	// }
+
+	// var employees []string
+	// employees := []string{"new", "not", "main"}
+	// fmt.Println(employees)
+
+	// for _, employee := range employees {
+	// 	fmt.Println(employee)
+	// }
+
+	// if result, err := json.Marshal(&SimpleStruct{GreetingMessage: "some message"}); err == nil {
+	// 	fmt.Println(string(result))
+	// }
+
+	// fmt.Println("")
 }
 
 func twoSum(nums []int, target int) []int {
