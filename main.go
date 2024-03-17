@@ -26,6 +26,42 @@ type tets struct {
 
 func main() {
 
+	// c := make(chan string)
+
+	// go func() {
+	// 	c <- "a"
+	// 	time.Sleep(time.Second * 1)
+	// 	c <- "b"
+	// 	time.Sleep(time.Second * 1)
+	// 	c <- "c"
+	// 	close(c)
+	// }()
+
+	// for v := range c {
+	// 	println(v)
+	// }
+
+	// if a is int, a must be 0 value
+	// if a is string, a must be empty value
+	// a := <-c
+	// fmt.Println(a)
+
+	// go func() {
+	// 	for v := range c {
+	// 		println(v)
+	// 	}
+	// }()
+
+	// c <- 1
+	// time.Sleep(time.Second * 2)
+	// c <- 2
+	// time.Sleep(time.Second * 2)
+	// c <- 3
+	// time.Sleep(time.Second * 2)
+	// c <- 4
+	// time.Sleep(time.Second * 2)
+	// c <- 5
+
 	// a := make([]string, 0, 5)
 	// b := []string{}
 
@@ -123,6 +159,28 @@ func main() {
 	// }
 
 	// fmt.Println("")
+
+	// a := searchInsert([]int{1, 3, 5, 6}, 5)
+	// fmt.Println(a)
+}
+
+func searchInsert(nums []int, target int) int {
+	left := 0
+	right := len(nums) - 1
+
+	for left >= right {
+		mid := (right + left) / 2
+		fmt.Println(mid)
+		if nums[mid] == target {
+			return mid
+		} else if nums[mid] > target {
+			right += mid - 1
+		} else {
+			left += mid + 1
+		}
+	}
+
+	return -1
 }
 
 // Definition for singly-linked list.
@@ -352,3 +410,277 @@ func longestCommonPrefixChatGPT(strs []string) string {
 
 	return shortest // All strings are identical up to the length of the shortest one
 }
+
+func search(nums []int, target int) int {
+	left := 0
+	right := len(nums) - 1
+
+	for left <= right {
+		mid := (right + left) / 2
+		fmt.Println(mid)
+		if nums[mid] > target {
+			right = mid - 1
+		} else if nums[mid] < target {
+			left = mid + 1
+		} else {
+			return mid
+		}
+	}
+
+	return -1
+}
+
+// binar searh for get value
+// func search(nums []int, target int) int {
+// 	tempSlice := nums
+// 	for {
+// 		mIndex := len(tempSlice) / 2
+// 		fmt.Println(tempSlice)
+// 		fmt.Println(mIndex)
+
+// 		// fmt.Println(nums[mIndex])
+// 		// fmt.Println(target)
+// 		if tempSlice[mIndex] > target {
+// 			tempSlice = tempSlice[:mIndex]
+// 		} else if tempSlice[mIndex] < target {
+// 			tempSlice = tempSlice[mIndex+1:]
+// 		} else {
+// 			return mIndex
+// 		}
+// 	}
+// }
+
+// func generate(numRows int) [][]int {
+// 	tri := [][]int{}
+
+// 	for i := 0; i < numRows; i++ { // 2
+// 		if i == 0 {
+// 			tri = append(tri, []int{1})
+// 			continue
+// 		}
+
+// 		shard := []int{}
+// 		shard = append(shard, 1)
+
+// 		for j := 0; j < i-1; j++ { // 1
+// 			shard = append(shard, tri[i-1][j]+tri[i-1][j+1])
+// 		}
+
+// 		shard = append(shard, 1)
+// 		tri = append(tri, shard)
+// 	}
+
+// 	return tri
+// }
+
+// func singleNumber(nums []int) int {
+// 	tempMap := make(map[int]int)
+
+// 	for i := 0; i < len(nums); i++ {
+// 		tempMap[nums[i]]++
+// 	}
+
+// 	for key, value := range tempMap {
+// 		if value == 1 {
+// 			return key
+// 		}
+// 	}
+
+// 	return 0
+// }
+
+// func searchInsert(nums []int, target int) int {
+// 	for i, n := range nums {
+// 		if target <= n {
+// 			return i
+// 		}
+// 	}
+
+// 	return 0
+// }
+
+// func longestCommonPrefix(strs []string) string {
+// 	r := ""
+// 	var shortestIndex = 0
+
+// 	for i := 0; i < len(strs); i++ {
+// 		if strs[i] == "" {
+// 			return r
+// 		}
+
+// 		if i == 0 {
+// 			shortestIndex = i
+// 		} else {
+// 			if len(strs[i]) < len(strs[shortestIndex]) {
+// 				shortestIndex = i
+// 			}
+// 		}
+// 	}
+
+// 	mainStr := strs[shortestIndex]
+// 	for i := 0; i < len(mainStr); i++ {
+// 		for j := 0; j < len(strs); j++ {
+// 			if j != shortestIndex && strs[j][i] != mainStr[i] {
+// 				return r
+// 			}
+// 		}
+
+// 		r += string(mainStr[i])
+// 	}
+
+// 	return r
+// }
+
+// func romanToInt(s string) int {
+// 	mapNumber := map[rune]int{
+// 		'I': 1,
+// 		'V': 5,
+// 		'X': 10,
+// 		'L': 50,
+// 		'C': 100,
+// 		'D': 500,
+// 		'M': 1000,
+// 	}
+
+// 	result := 0
+// 	sLen := len(s)
+// 	for i := 0; i < sLen; i++ {
+// 		if i+1 != sLen && mapNumber[rune(s[i])] < mapNumber[rune(s[i+1])] {
+// 			result += mapNumber[rune(s[i+1])] - mapNumber[rune(s[i])]
+// 			i++
+// 		} else {
+// 			result += mapNumber[rune(s[i])]
+// 		}
+// 	}
+
+// 	return result
+// }
+
+// func twoSum(nums []int, target int) []int {
+// 	// for i := 0; i < len(nums); i++ {
+// 	// 	for j := 1; j < len(nums); j++ {
+// 	// 		if nums[i]+nums[j] == target {
+// 	// 			return []int{i, j}
+// 	// 		}
+// 	// 	}
+// 	// }
+
+// 	for i := 0; i < len(nums); i++ {
+// 		var ft int
+// 		if target > nums[i] {
+// 			ft = target - nums[i]
+// 		} else {
+// 			ft = nums[i] - target
+// 		}
+
+// 		for index, v := range nums {
+// 			if v == ft && index != i {
+// 				return []int{index, i}
+// 			}
+// 		}
+// 	}
+
+// 	return nil
+// }
+
+// func intersection(nums1 []int, nums2 []int) []int {
+// 	index1 := 0
+// 	r := []int{}
+
+// 	for len(nums1) != 0 && len(nums2) != 0 {
+// 		for index2, v := range nums2 {
+// 			if nums1[index1] == v {
+// 				r = append(r, v)
+// 				nums1 = append(nums1[:index1], nums1[index1+1:]...)
+// 				nums2 = append(nums2[:index2], nums2[index2+1:]...)
+
+// 				fmt.Println(nums1)
+// 				fmt.Println(nums2)
+// 			} else {
+// 				nums1 = append(nums1[:index1], nums1[index1+1:]...)
+// 			}
+
+// 			break
+// 		}
+// 	}
+
+// 	return r
+// }
+
+// func majorityElement(nums []int) int {
+// 	g := map[int]int{}
+
+// 	rkey := 0
+// 	rvalue := 0
+
+// 	for _, v := range nums {
+// 		g[v]++
+// 	}
+
+// 	for k, v := range g {
+// 		if v > rvalue {
+// 			rkey = k
+// 			rvalue = v
+// 		}
+// 	}
+
+// 	return rkey
+// }
+
+// func moveZeroes(nums []int) {
+// 	r := []int{}
+// 	zeroCount := 0
+
+// 	for _, v := range nums {
+// 		if v != 0 {
+// 			r = append(r, v)
+// 		} else {
+// 			zeroCount++
+// 		}
+// 	}
+
+// 	nums = append(r, make([]int, zeroCount)...)
+// 	fmt.Println(nums)
+// }
+
+// func maxProfit(prices []int) int {
+
+// 	minIndex := 0
+
+// 	for i := 1; i < len(prices); i++ {
+// 		if prices[minIndex] > prices[i] {
+// 			minIndex = i
+// 		}
+// 	}
+
+// 	fmt.Println(minIndex)
+
+// 	found := false
+// 	maxIndex := minIndex
+// 	for i := 0; i < len(prices); i++ {
+// 		if i == minIndex {
+// 			found = true
+// 			continue
+// 		}
+
+// 		if found && prices[maxIndex] < prices[i] {
+// 			maxIndex = i
+// 		}
+// 	}
+
+// 	return prices[maxIndex] - prices[minIndex]
+
+// minValue := slices.Min(prices)
+// found := false
+
+// for i, v := range prices {
+// 	if !found && v == minValue {
+// 		found = true
+// 		continue
+// 	}
+
+// 	if found {
+
+// 	}
+// }
+// }
